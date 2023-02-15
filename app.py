@@ -113,16 +113,12 @@ def crawl():
         'authors':article.authors,
         'content':article.text,
         'html':article.article_html,
-        # 'keywords':keywords,
-        # 'summary':article.summary,
-        # 'meta_title':meta_data.get('og:title'),
-        # 'meta_description':meta_data.get('og:description')
     }
     
     return jsonify({'success': 'Has valid URL', 'article': news_article})
-    article.download()
-    article.parse()
-    article.nlp()
+
+    # NLP is causing an error need to investigate
+    # article.nlp()
     
     # meta_data = article.meta_data
 
@@ -132,20 +128,18 @@ def crawl():
     # if hasattr(article, 'keywords'):
     #     keywords = article.keywords
     
-    # domain_name = get_domain_name(url)
-    
-    news_article = {
+    # news_article = {
         # 'domain':domain_name,
-        'title':article.title,
-        'authors':article.authors,
-        'content':article.text,
-        'html':article.article_html,
+        # 'title':article.title,
+        # 'authors':article.authors,
+        # 'content':article.text,
+        # 'html':article.article_html,
         # 'keywords':keywords,
         # 'summary':article.summary,
         # 'meta_title':meta_data.get('og:title'),
         # 'meta_description':meta_data.get('og:description')
-    }
-    return jsonify(news_article)
+    # }
+    # return jsonify(news_article)
     
 @app.route("/")
 def index():
