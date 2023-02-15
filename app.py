@@ -1,4 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify, request
+from newspaper import Article
+import json
+import feedparser
+import re
+from flask_cors import CORS
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 
