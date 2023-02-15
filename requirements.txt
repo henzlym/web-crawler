@@ -1,6 +1,5 @@
 flask
 newspaper3k
-json
 feedparser
 re
 flask_cors
