@@ -109,10 +109,10 @@ def crawl():
     # meta_data = article.meta_data
 
 
-    keywords = False
+    # keywords = False
     
-    if hasattr(article, 'keywords'):
-        keywords = article.keywords
+    # if hasattr(article, 'keywords'):
+    #     keywords = article.keywords
     
     # domain_name = get_domain_name(url)
     
@@ -122,7 +122,7 @@ def crawl():
         'authors':article.authors,
         'content':article.text,
         'html':article.article_html,
-        'keywords':keywords,
+        # 'keywords':keywords,
         # 'summary':article.summary,
         # 'meta_title':meta_data.get('og:title'),
         # 'meta_description':meta_data.get('og:description')
