@@ -106,7 +106,7 @@ def crawl():
     article.parse()
     article.nlp()
     
-    meta_data = article.meta_data
+    # meta_data = article.meta_data
 
 
     keywords = False
@@ -114,7 +114,7 @@ def crawl():
     if hasattr(article, 'keywords'):
         keywords = article.keywords
     
-    domain_name = get_domain_name(url)
+    # domain_name = get_domain_name(url)
     
     news_article = {
         'domain':domain_name,
@@ -123,9 +123,9 @@ def crawl():
         'content':article.text,
         'html':article.article_html,
         'keywords':keywords,
-        'summary':article.summary,
-        'meta_title':meta_data.get('og:title'),
-        'meta_description':meta_data.get('og:description')
+        # 'summary':article.summary,
+        # 'meta_title':meta_data.get('og:title'),
+        # 'meta_description':meta_data.get('og:description')
     }
     return jsonify(news_article)
     
