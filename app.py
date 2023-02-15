@@ -104,8 +104,20 @@ def crawl():
     article = Article(url, keep_article_html=True)
     article.download()
     article.parse()
-    article.nlp()
-    return jsonify({'success': 'Has valid URL'})
+
+    news_article = {
+        # 'domain':domain_name,
+        'title':article.title,
+        'authors':article.authors,
+        'content':article.text,
+        'html':article.article_html,
+        # 'keywords':keywords,
+        # 'summary':article.summary,
+        # 'meta_title':meta_data.get('og:title'),
+        # 'meta_description':meta_data.get('og:description')
+    }
+    
+    return jsonify({'success': 'Has valid URL', 'article': news_article})
     article.download()
     article.parse()
     article.nlp()
