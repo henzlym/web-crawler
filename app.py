@@ -32,6 +32,55 @@ def is_valid_url(feed_url):
         return False
     return True
     
+@app.route("/feed", methods = ['POST', 'GET'] )
+def parse_feed():
+    feed_url = ''
+    
+    # return response
+    if request.method == 'POST':
+        if 'url' not in request.form:
+            return jsonify({'error': 'The url parameter is required in the request body'}), 400
+        feed_url = request.form['url']
+    else:
+        if 'url' not in request.args:
+            return jsonify({'error': 'The url parameter is required in the query string'}), 400
+        feed_url = request.args.get('url')
+
+    if not feed_url:
+        return jsonify({'error': 'The url parameter cannot be empty'}), 400
+    
+    if is_valid_url(feed_url) == False:
+        # Parse the feed
+        return jsonify({'error': 'Invalid URL. Please enter a valid URL and try again.'}), 400
+    
+    parsed_feed = feedparser.parse(feed_url)
+
+    if parsed_feed.status == 200:
+        entries = parsed_feed.entries
+        response = []
+        for entry in entries:
+            entry_data = {}
+            if hasattr(entry, 'title'):
+                entry_data['title'] = entry.title
+            if hasattr(entry, 'link'):
+                entry_data['link'] = entry.link
+            if hasattr(entry, 'description'):
+                entry_data['description'] = strip_tags(entry.description)
+            if hasattr(entry, 'published'):
+                entry_data['published'] = entry.published
+            if hasattr(entry, 'author'):
+                entry_data['author'] = entry.author
+
+            category = entry.get("category", [])
+            tags = entry.get("tags", [])
+            entry_data['category'] = category
+            entry_data['tags'] = tags
+                
+            response.append(entry_data)
+        return jsonify(response)
+    else:
+        return jsonify({'error': 'Unable to parse the feed. Please check the URL and try again.'}), 400
+        
 @app.route("/")
 def index():
     return "Hello World!"
