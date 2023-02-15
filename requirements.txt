@@ -1,0 +1,7 @@
+flask
+newspaper
+json
+feedparser
+re
+flask_cors
+urllib.parse
