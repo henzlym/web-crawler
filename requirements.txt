@@ -2,3 +2,4 @@ flask
 newspaper3k
 feedparser
 flask_cors
+gunicorn
