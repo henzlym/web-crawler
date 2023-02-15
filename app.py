@@ -103,6 +103,7 @@ def crawl():
       
     article = Article(url, keep_article_html=True)
     article.download()
+    article.parse()
     return jsonify({'success': 'Has valid URL'})
     article.download()
     article.parse()
