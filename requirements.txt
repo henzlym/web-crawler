@@ -2,4 +2,3 @@ flask
 newspaper3k
 feedparser
 flask_cors
-urllib.parse
