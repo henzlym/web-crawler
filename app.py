@@ -81,6 +81,54 @@ def parse_feed():
     else:
         return jsonify({'error': 'Unable to parse the feed. Please check the URL and try again.'}), 400
         
+@app.route("/crawl", methods = ['POST', 'GET'] )
+def crawl():
+    url = ''
+    # return response
+    if request.method == 'POST':
+        if 'url' not in request.form:
+            return jsonify({'error': 'The url parameter is required in the request body'}), 400
+        url = request.form['url']
+    else:
+        if 'url' not in request.args:
+            return jsonify({'error': 'The url parameter is required in the query string'}), 400
+        url = request.args.get('url')
+
+    if not url:
+        return jsonify({'error': 'The url parameter cannot be empty'}), 400
+    
+    if is_valid_url(url) == False:
+        # Parse the feed
+        return jsonify({'error': 'Invalid URL. Please enter a valid URL and try again.'}), 400
+      
+    article = Article(url, keep_article_html=True)
+    article.download()
+    article.parse()
+    article.nlp()
+    
+    meta_data = article.meta_data
+
+
+    keywords = False
+    
+    if hasattr(article, 'keywords'):
+        keywords = article.keywords
+    
+    domain_name = get_domain_name(url)
+    
+    news_article = {
+        'domain':domain_name,
+        'title':article.title,
+        'authors':article.authors,
+        'content':article.text,
+        'html':article.article_html,
+        'keywords':keywords,
+        'summary':article.summary,
+        'meta_title':meta_data.get('og:title'),
+        'meta_description':meta_data.get('og:description')
+    }
+    return json.dumps(news_article)
+    
 @app.route("/")
 def index():
     return "Hello World!"
