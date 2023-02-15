@@ -117,7 +117,7 @@ def crawl():
     # domain_name = get_domain_name(url)
     
     news_article = {
-        'domain':domain_name,
+        # 'domain':domain_name,
         'title':article.title,
         'authors':article.authors,
         'content':article.text,
