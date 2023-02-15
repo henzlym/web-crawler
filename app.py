@@ -101,6 +101,7 @@ def crawl():
         # Parse the feed
         return jsonify({'error': 'Invalid URL. Please enter a valid URL and try again.'}), 400
       
+    article = Article(url, keep_article_html=True)
     return jsonify({'success': 'Has valid URL'})
     article = Article(url, keep_article_html=True)
     article.download()
