@@ -127,7 +127,7 @@ def crawl():
         'meta_title':meta_data.get('og:title'),
         'meta_description':meta_data.get('og:description')
     }
-    return json.dumps(news_article)
+    return jsonify(news_article)
     
 @app.route("/")
 def index():
