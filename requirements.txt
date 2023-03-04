@@ -3,3 +3,4 @@ newspaper3k
 feedparser
 flask_cors
 gunicorn
+transformers

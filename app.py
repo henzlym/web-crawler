@@ -5,6 +5,9 @@ import feedparser
 import re
 from flask_cors import CORS
 from urllib.parse import urlparse
+from transformers import GPT2TokenizerFast
+tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
+
 
 app = Flask(__name__)
 
@@ -32,6 +35,20 @@ def is_valid_url(feed_url):
         return False
     return True
     
+@app.route("/tokens", methods = ['POST', 'GET'] )
+def count_tokens():
+    tokens = False
+    
+    # return response
+    if request.method == 'POST':
+        if 'prompt' not in request.form:
+            return jsonify({'error': 'The prompt parameter is required in the request body'}), 400
+        prompt = request.form['prompt']
+        tokens = tokenizer(prompt)['input_ids']
+        return jsonify(tokens), 400
+
+    return jsonify(tokens), 400
+
 @app.route("/feed", methods = ['POST', 'GET'] )
 def parse_feed():
     feed_url = ''
